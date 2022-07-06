@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"go-practise/chapt04/vm"
+	"go-practise/chapt05/vm"
 	"net/http"
 )
 

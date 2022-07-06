@@ -11,6 +11,14 @@ func init() {
 	getConfig(projectName)
 }
 
+type sessionConfig struct {
+	Name       string
+	AuthKey    string
+	EncryptKey string
+	MaxAge     int
+	HttpOnly   bool
+}
+
 func getConfig(projectName string) {
 	viper.SetConfigName("config") // name of config file (without extension)
 
@@ -34,4 +42,14 @@ func GetMysqlConnectingString() string {
 	charset := viper.GetString("mysql.charset")
 
 	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true", usr, pwd, host, port, db, charset)
+}
+
+func GetSessionConfig() sessionConfig {
+	return sessionConfig{
+		Name:       viper.GetString("session.name"),
+		AuthKey:    viper.GetString("session.authKey"),
+		EncryptKey: viper.GetString("session.encryptKey"),
+		MaxAge:     viper.GetInt("session.maxAge"),
+		HttpOnly:   viper.GetBool("session.httpOnly"),
+	}
 }
