@@ -1,18 +1,25 @@
 package controller
 
 import (
+	"fmt"
 	"go-practise/chapt07/vm"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 type home struct{}
 
 func (h home) registerRoutes() {
-	http.HandleFunc("/", middleAuth(indexHandler))
-	http.HandleFunc("/login", loginHandler)
-	http.HandleFunc("/logout", middleAuth(logoutHandler))
-	http.HandleFunc("/register", registerHandler)
+	r := mux.NewRouter()
+	r.HandleFunc("/", middleAuth(indexHandler))
+	r.HandleFunc("/login", loginHandler)
+	r.HandleFunc("/logout", middleAuth(logoutHandler))
+	r.HandleFunc("/user/{username}", middleAuth(profileHandler))
+	r.HandleFunc("/register", registerHandler)
+
+	http.Handle("/", r)
 }
 
 // 首页
@@ -102,4 +109,19 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
 	}
+}
+
+func profileHandler(w http.ResponseWriter, r *http.Request) {
+	tpName := "profile.html"
+	vars := mux.Vars(r)
+	pUser := vars["username"]
+	sUser, _ := getSessionUser(r)
+	vop := vm.ProfileViewModelOp{}
+	v, err := vop.GetVM(sUser, pUser)
+	if err != nil {
+		msg := fmt.Sprintf("user ( %s ) does not exist", pUser)
+		w.Write([]byte(msg))
+		return
+	}
+	templates[tpName].Execute(w, &v)
 }
