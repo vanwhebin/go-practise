@@ -45,6 +45,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		username := r.Form.Get("username")
 		password := r.Form.Get("password")
 
+		log.Printf(fmt.Sprintf("进入登录环节 %s: %s", username, password))
 		if len(username) < 3 {
 			v.AddError("username must longer than 3")
 		}

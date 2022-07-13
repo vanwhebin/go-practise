@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"go-practise/chapt07/model"
@@ -21,6 +22,8 @@ func main() {
 		{
 			Username:     "wwb",
 			PasswordHash: model.GeneratePasswordHash("abc123"),
+			Email:        "wwb@example.com",
+			Avatar:       fmt.Sprintf("https://www.gravatar.com/avatar/%s?d=identicon", model.Md5("wwb@example.com")),
 			Posts: []model.Post{
 				{Body: "Beautiful day in Portland!"},
 			},
@@ -29,6 +32,7 @@ func main() {
 			Username:     "wanweibin",
 			PasswordHash: model.GeneratePasswordHash("abc123"),
 			Email:        "wwb@test.com",
+			Avatar:       fmt.Sprintf("https://www.gravatar.com/avatar/%s?d=identicon", model.Md5("wwb@test.com")),
 			Posts: []model.Post{
 				{Body: "The Avengers movie was so cool!"},
 				{Body: "Sun shine is beautiful"},

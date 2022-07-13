@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"errors"
 	"fmt"
-	"go-practise/chapt07/model"
 	"go-practise/chapt07/vm"
 	"html/template"
 	"io/ioutil"
@@ -49,20 +49,20 @@ func PopulateTemplates() map[string]*template.Template {
 
 func getSessionUser(r *http.Request) (string, error) {
 	var username string
-	// session, err := sessionStore.Get(r, sessionName)
-	// if err != nil {
-	// return "", err
-	// }
+	session, err := sessionStore.Get(r, sessionName)
+	if err != nil {
+		return "", err
+	}
 
-	// val := session.Values["user"]
-	// fmt.Println("val:", val)
-	// username, ok := val.(string)
-	// if !ok {
-	// 	return "", errors.New("can not get session user")
-	// }
-	user, _ := model.GetLastUser()
-	username = user.Username
-	fmt.Println("username:", user.Username)
+	val := session.Values["user"]
+	fmt.Println("val:", val)
+	username, ok := val.(string)
+	if !ok {
+		return "", errors.New("can not get session user")
+	}
+	// user, _ := model.GetLastUser()
+	// username = user.Username
+	fmt.Println("username:", username)
 	return username, nil
 }
 
@@ -70,6 +70,8 @@ func setSessionUser(w http.ResponseWriter, r *http.Request, username string) err
 	session, err := sessionStore.Get(r, sessionName)
 	log.Println(username)
 	log.Println(session)
+	log.Println(session.Options)
+	log.Println(session.Values)
 	log.Println(sessionName)
 	log.Println(err)
 	if err != nil {
