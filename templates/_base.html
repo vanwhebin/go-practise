@@ -1,0 +1,25 @@
+<html>
+    <head>
+        {{if .Title}}
+            <title>{{.Title}} - blog</title>
+        {{else}}
+            <title>Welcome to blog!</title>
+        {{end}}
+
+    </head>
+    <body>
+        <div>Blog: 
+            <a href="/">Home</a>
+
+            {{if .CurrentUser}}
+                <a href="/user/{{.CurrentUser}}">Profile</a>
+                <a href="/logout">Logout</a>
+            {{else}}
+                <a href="/login">Login</a>
+            {{end}}
+
+            {{template "content" .}}
+        </div>
+        <p>New User? <a href="/register">Click to Register!</a></p>
+    </body>
+</html>
