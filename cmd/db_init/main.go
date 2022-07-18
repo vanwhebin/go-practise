@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"go-practise/chapt07/model"
+	"go-practise/chapt08/model"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )

@@ -1,0 +1,13 @@
+mysql:
+  charset: utf8mb4
+  db: go-mega
+  host: localhost
+  port: 3306
+  password: root
+  user: root
+session:
+  name: gomega
+  authKey: qwertyuiop
+  encryptKey: $@2XWjh4teFLIC31KfUMaaS*Roqeis^k
+  maxAge: 10800
+  httpOnly: true
