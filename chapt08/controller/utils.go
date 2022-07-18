@@ -6,7 +6,6 @@ import (
 	"go-practise/chapt08/vm"
 	"html/template"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"regexp"
@@ -55,12 +54,10 @@ func getSessionUser(r *http.Request) (string, error) {
 	}
 
 	val := session.Values["user"]
-	fmt.Println("val:", val)
 	username, ok := val.(string)
 	if !ok {
 		return "", errors.New("can not get session user")
 	}
-	fmt.Println("username:", username)
 	return username, nil
 }
 
@@ -74,7 +71,6 @@ func setSessionUser(w http.ResponseWriter, r *http.Request, username string) err
 	session.Values["authenticated"] = true
 	err = session.Save(r, w)
 
-	log.Println(err)
 	if err != nil {
 		return err
 	}

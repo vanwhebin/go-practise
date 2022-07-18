@@ -23,9 +23,9 @@ type sessionConfig struct {
 func getConfig(projectName, chapter string) {
 	viper.SetConfigName("config") // name of config file (without extension)
 
-	viper.AddConfigPath(".")                                                                              // optionally look for config in the working directory
-	viper.AddConfigPath(fmt.Sprintf("D:/go/%s/%s/", projectName, chapter))                                // call multiple times to add many search paths
-	viper.AddConfigPath(fmt.Sprintf("/$HOME/GoProjects/go-practise/config/%s/%s/", projectName, chapter)) // path to look for the config file in
+	viper.AddConfigPath(".")                                                           // optionally look for config in the working directory
+	viper.AddConfigPath(fmt.Sprintf("D:/go/%s/%s/", projectName, chapter))             // call multiple times to add many search paths
+	viper.AddConfigPath(fmt.Sprintf("/$HOME/GoProjects/%s/%s/", projectName, chapter)) // path to look for the config file in
 
 	err := viper.ReadInConfig() // Find and read the config file
 	if err != nil {             // Handle errors reading the config file

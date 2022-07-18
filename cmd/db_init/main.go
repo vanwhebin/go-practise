@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"go-practise/chapt08/model"
@@ -15,32 +14,19 @@ func main() {
 	defer db.Close()
 	model.SetDB(db)
 
-	db.DropTableIfExists(model.User{}, model.Post{})
+	db.DropTableIfExists(model.User{}, model.Post{}, "follower")
 	db.CreateTable(model.User{}, model.Post{})
 
-	users := []model.User{
-		{
-			Username:     "wwb",
-			PasswordHash: model.GeneratePasswordHash("abc123"),
-			Email:        "wwb@example.com",
-			Avatar:       fmt.Sprintf("https://www.gravatar.com/avatar/%s?d=identicon", model.Md5("wwb@example.com")),
-			Posts: []model.Post{
-				{Body: "Beautiful day in Portland!"},
-			},
-		},
-		{
-			Username:     "wanweibin",
-			PasswordHash: model.GeneratePasswordHash("abc123"),
-			Email:        "wwb@test.com",
-			Avatar:       fmt.Sprintf("https://www.gravatar.com/avatar/%s?d=identicon", model.Md5("wwb@test.com")),
-			Posts: []model.Post{
-				{Body: "The Avengers movie was so cool!"},
-				{Body: "Sun shine is beautiful"},
-			},
-		},
-	}
+	model.AddUser("wwb", "abc123", "wwb@example.com")
+	model.AddUser("wanweibin", "abc123", "wanweibin@example.com")
 
-	for _, u := range users {
-		db.Debug().Create(&u)
-	}
+	u1, _ := model.GetUserByUsername("wwb")
+	u1.CreatePost("Beautiful day in Portland!")
+	model.UpdateAboutMe(u1.Username, `I'm the author of Go-Mega Tutorial you are reading now!`)
+
+	u2, _ := model.GetUserByUsername("wanweibin")
+	u2.CreatePost("The Avengers movie was so cool!")
+	u2.CreatePost("Sun shine is beautiful")
+
+	u1.Follow(u2.Username)
 }

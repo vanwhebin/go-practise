@@ -12,6 +12,10 @@
                     <p>Last seen on: {{ .ProfileUser.LastSeen }}</p>
                 {{end}}
 
+
+                <p>{{.FollowsCount}} followers, {{.FollowingCount}} following.</p>
+
+
                 {{if .Editable}}
                     <p><a href="/profile_edit">Edit your profile</a></p>
                 {{end}}

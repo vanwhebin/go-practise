@@ -17,6 +17,8 @@ func (h home) registerRoutes() {
 	r.HandleFunc("/login", loginHandler)
 	r.HandleFunc("/logout", middleAuth(logoutHandler))
 	r.HandleFunc("/user/{username}", middleAuth(profileHandler))
+	r.HandleFunc("/follow/{username}", middleAuth(followHandler))
+	r.HandleFunc("/unfollow/{username}", middleAuth(unfollowhandler))
 	r.HandleFunc("/profile_edit", middleAuth(profileEditHandler))
 	r.HandleFunc("/register", registerHandler)
 
@@ -135,4 +137,33 @@ func profileEditHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		http.Redirect(w, r, fmt.Sprintf("/user/%s", username), http.StatusTemporaryRedirect)
 	}
+}
+
+func followHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	pUser := vars["username"]
+	sUser, _ := getSessionUser(r)
+	err := vm.Follow(sUser, pUser)
+	if err != nil {
+		log.Println("Follow error:", err)
+		w.Write([]byte("Error in Follow"))
+		return
+	}
+	http.Redirect(w, r, fmt.Sprintf("/user/%s", pUser), http.StatusTemporaryRedirect)
+}
+
+func unfollowhandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	pUser := vars["username"]
+	sUser, _ := getSessionUser(r)
+
+	err := vm.Unfollow(sUser, pUser)
+
+	if err != nil {
+		log.Println("Unfollow error:", err)
+		w.Write([]byte("Error in Unfollow"))
+		return
+	}
+
+	http.Redirect(w, r, fmt.Sprintf("/user/%s", pUser), http.StatusTemporaryRedirect)
 }
