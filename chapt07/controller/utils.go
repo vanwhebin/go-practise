@@ -60,20 +60,13 @@ func getSessionUser(r *http.Request) (string, error) {
 	if !ok {
 		return "", errors.New("can not get session user")
 	}
-	// user, _ := model.GetLastUser()
-	// username = user.Username
 	fmt.Println("username:", username)
 	return username, nil
 }
 
 func setSessionUser(w http.ResponseWriter, r *http.Request, username string) error {
 	session, err := sessionStore.Get(r, sessionName)
-	log.Println(username)
-	log.Println(session)
-	log.Println(session.Options)
-	log.Println(session.Values)
-	log.Println(sessionName)
-	log.Println(err)
+
 	if err != nil {
 		return err
 	}

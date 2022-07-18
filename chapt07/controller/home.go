@@ -45,24 +45,8 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		username := r.Form.Get("username")
 		password := r.Form.Get("password")
 
-		log.Printf(fmt.Sprintf("进入登录环节 %s: %s", username, password))
-		if len(username) < 3 {
-			v.AddError("username must longer than 3")
-		}
-
-		if len(password) < 6 {
-			v.AddError("password must longer than 6")
-		}
-
-		if len(v.Errs) > 0 {
-			templates[tpName].Execute(w, &v)
-		} else {
-			http.Redirect(w, r, "/", http.StatusSeeOther)
-		}
-
-		if !vm.CheckLogin(username, password) {
-			v.AddError("username or password is not correct, please input again")
-		}
+		errs := checkLogin(username, password)
+		v.AddError(errs...)
 
 		if len(v.Errs) > 0 {
 			templates[tpName].Execute(w, &v)
@@ -107,7 +91,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			setSessionUser(w, r, username)
-			http.Redirect(w, r, "/", http.StatusSeeOther)
+			http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		}
 	}
 }
