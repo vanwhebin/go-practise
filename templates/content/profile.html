@@ -1,7 +1,7 @@
 {{define "content"}}
     <table>
         <tr valign="top">
-            <td><img src="http://iph.href.lu/64x64"></td>
+            <td><img src="{{.ProfileUser.Avatar}}" width="64"></td>
             <td>
                 <h1>User: {{.ProfileUser.Username}}</h1>
                 {{if .ProfileUser.AboutMe}}
@@ -26,9 +26,15 @@
 
     <hr/>
 
+    
+<table>
     {{range .Posts}}
-    <p>
-    {{ .User.Username }} says: <b>{{ .Body }}</b>
-    </p>
+    <tr valign="top">
+        <td><img src="{{.User.Avatar}}" alt="" width="36"></td>
+        <td><a href="/user/{{.User.Username}}">{{.User.Username}}</a> says:<br>{{.Body}}</td>
+    </tr>
     {{end}}
+</table>
+
+    
 {{end}}
