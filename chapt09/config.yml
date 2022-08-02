@@ -13,3 +13,8 @@ session:
   httpOnly: true
 basic:
   pageLimit: 5
+mail:
+  smtp:smtp.163.com
+  smtp-port: 587
+  username: isfogg@163.com
+  password:

@@ -24,6 +24,14 @@ type basicConfig struct {
 	PageLimit int
 }
 
+type emailConfig struct {
+	Server   string
+	Smtp     string
+	Port     int
+	User     string
+	Password string
+}
+
 func getConfig(projectName, chapter string) {
 	viper.SetConfigName("config") // name of config file (without extension)
 
@@ -62,5 +70,15 @@ func GetSessionConfig() sessionConfig {
 func GetBasicConfig() basicConfig {
 	return basicConfig{
 		PageLimit: viper.GetInt("basic.pageLimit"),
+	}
+}
+
+func GetEmailConfig() emailConfig {
+	return emailConfig{
+		Server:   viper.GetString("email.server"),
+		Smtp:     viper.GetString("email.smtp"),
+		Port:     viper.GetInt("email.port"),
+		User:     viper.GetString("email.username"),
+		Password: viper.GetString("email.password"),
 	}
 }
