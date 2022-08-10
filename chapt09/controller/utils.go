@@ -120,21 +120,21 @@ func checkPassword(password string) string {
 
 func checkEmail(email string) string {
 	if m, _ := regexp.MatchString(`^([\w\.\_]{2,10})@(\w{1,}).([a-z]{2,4})$`, email); !m {
-		return fmt.Sprintf("Email field not a valid email")
+		return "invvalid email"
 	}
 	return ""
 }
 
 func checkUserPassword(username, password string) string {
 	if !vm.CheckLogin(username, password) {
-		return fmt.Sprintf("Username and password is not correct.")
+		return "Username and password is not correct."
 	}
 	return ""
 }
 
 func checkUserExist(username string) string {
 	if !vm.CheckUserExist(username) {
-		return fmt.Sprintf("Username already exist, please choose another username")
+		return fmt.Sprintf("%s already exist, please choose another username", username)
 	}
 	return ""
 }
