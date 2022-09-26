@@ -17,7 +17,7 @@ func (h home) registerRoutes() {
 	r.NotFoundHandler = http.HandlerFunc(notfoundHandler)
 	r.HandleFunc("/", middleAuth(indexHandler))
 	r.HandleFunc("/u/{username}/popup", middleAuth(popupHandler))
-	r.HandleFunc("/login", loginHandler)
+	r.HandleFunc("/login", middleAuth(loginHandler))
 	r.HandleFunc("/logout", middleAuth(logoutHandler))
 	r.HandleFunc("/u/{username}", middleAuth(profileHandler))
 	r.HandleFunc("/follow/{username}", middleAuth(followHandler))

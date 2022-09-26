@@ -67,12 +67,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	vop := vm.LoginViewModelOp{}
 	v := vop.GetVM()
 
-	_, err := getSessionUser(r)
-	if err == nil {
-		log.Println("middle get Session err and redirect to login")
-		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
-	}
-
 	if r.Method == http.MethodGet {
 		templates[tpName].Execute(w, &v)
 	}
