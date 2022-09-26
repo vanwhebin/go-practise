@@ -3,7 +3,7 @@
     <form action="/login" method="post" name="login">
         <p><input type="text" name="username" value="" placeholder="Username or Email" class="form-control"></p>
         <p><input type="password" name="password" value="" placeholder="Password" class="form-control"></p>
-        <p><input type="submit" name="submit" value="Login" class="btn btn-outline-primary"></p>
+        <p><input type="submit" name="submit" value="Login" class="btn btn-outline-primary"> <span><a href="/register">Register</a></span></p>
     </form>
 
     {{if .Errs}}

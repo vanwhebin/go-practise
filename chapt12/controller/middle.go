@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"go-practise/chapt08/model"
+	"go-practise/chapt12/model"
 	"net/http"
 )
 
@@ -15,8 +15,14 @@ func middleAuth(next http.HandlerFunc) http.HandlerFunc {
 
 		if err != nil {
 			http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
-		} else {
-			next.ServeHTTP(w, r)
+			return
 		}
+
+		if r.RequestURI == "/login" || r.RequestURI == "/register" {
+			http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+			return
+		}
+
+		next.ServeHTTP(w, r)
 	}
 }

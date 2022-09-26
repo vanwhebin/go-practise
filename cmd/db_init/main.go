@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"go-practise/chapt11/model"
+	"go-practise/chapt12/model"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
