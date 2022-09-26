@@ -7,8 +7,8 @@
 
 
 <form action="/" method="post">
-    <p><textarea name="body" id="" cols="80" rows="3" value="", placeholder="say something"></textarea></p>
-    <p><input type="submit" name="submit" value="Post"></p>
+    <p><textarea name="body" id="" cols="80" rows="3" value="", placeholder="say something" class="form-control"></textarea></p>
+    <p><input type="submit" name="submit" value="Post" class="btn btn-outline-primary"></p>
 
 
     {{if .Flash}}
@@ -22,24 +22,44 @@
     <table>
         <tr valign="top">
             <td><img src="{{.User.Avatar}}" alt="" width="36"></td>
-            <td><a href="/user/{{.User.Username}}">{{.User.Username}}</a> says:<br/> {{.Body}}</td>
+            <td><a href="/u/{{.User.Username}}">{{.User.Username}}</a> says:<br/> {{.Body}}</td>
         </tr>
     </table>
 {{end}}
 
 
-{{ if gt .PrevPage 0 }}
-    <a href="/?page={{.PrevPage}}">Previous Posts</a>
-{{ end }}
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+    {{ if gt .PrevPage 0 }}
+        <li class="page-item">
+            <a href="/?page={{.PrevPage}}">
+                <span class="page-link" aria-hidden="true">&larr; Previous Posts</span>
+            </a>
+        </li>
+    {{ else }}
+        <li class="page-item disabled">
+            <a href="#">
+                <span class="page-link" aria-hidden="true">&larr; Previous Posts</span>
+            </a>
+        </li> 
+    {{ end }}
 
+    {{ if gt .NextPage 0 }}
+        <li class="page-item">
+            <a href="/?page={{.NextPage}}">
+                <span class="page-link" aria-hidden="true">Latest Posts &rarr;</span>
+            </a>
+        </li>
+    {{ else }}
+        <li class="page-item disabled">
+            <a href="#">
+                <span class="page-link" aria-hidden="true">Latest Posts &rarr;</span>
+            </a>
+        </li> 
+    {{ end }}
 
-{{ if  gt .NextPage 0 }}
-
-    <a href="/?page={{.NextPage}}">Latest Posts</a>
-
-{{ end }}
-
-
+    </ul>
+</nav>
 
 
 {{end}}

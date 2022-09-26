@@ -13,15 +13,38 @@
         {{end}}
     </table>
 
+    
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
     {{ if gt .PrevPage 0 }}
-        <a href="/explore?page={{.PrevPage}}">Previous Posts</a>
+        <li class="page-item">
+            <a href="/?page={{.PrevPage}}">
+                <span class="page-link" aria-hidden="true">&larr; Previous Posts</span>
+            </a>
+        </li>
+    {{ else }}
+        <li class="page-item disabled">
+            <a href="#">
+                <span class="page-link" aria-hidden="true">&larr; Previous Posts</span>
+            </a>
+        </li> 
     {{ end }}
 
-
-    {{ if  gt .NextPage 0 }}
-
-        <a href="/explore?page={{.NextPage}}">Latest Posts</a>
-
+    {{ if gt .NextPage 0 }}
+        <li class="page-item">
+            <a href="/?page={{.NextPage}}">
+                <span class="page-link" aria-hidden="true">Latest Posts &rarr;</span>
+            </a>
+        </li>
+    {{ else }}
+        <li class="page-item disabled">
+            <a href="#">
+                <span class="page-link" aria-hidden="true">Latest Posts &rarr;</span>
+            </a>
+        </li> 
     {{ end }}
+
+    </ul>
+</nav>
 
 {{end}}
